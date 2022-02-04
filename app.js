@@ -2,6 +2,8 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
+const { ctrlWrapperMiddleware } = require("./middlewares");
+const { getAllTransaction } = require("./controllers/transactions");
 
 const transactionsRouter = require("./routes/api/transactions");
 
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use("/api/transactions", transactionsRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ message: "Not found" });
+  ctrlWrapperMiddleware(getAllTransaction);
 });
 
 app.use((err, req, res, next) => {

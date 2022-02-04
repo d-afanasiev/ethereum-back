@@ -30,6 +30,6 @@ const transactiontSchema = new Schema({
 
 transactiontSchema.plugin(mongoosePaginate);
 
-const Transactions = model("Transaction", transactiontSchema);
+const Transactions = model("transaction", transactiontSchema);
 
 module.exports = { Transactions };
