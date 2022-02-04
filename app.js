@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/api/transactions", transactionsRouter);
 
 app.use((req, res) => {
-  ctrlWrapperMiddleware(getAllTransaction);
+  res.status(404).json({ message: "Not found" });
 });
 
 app.use((err, req, res, next) => {
