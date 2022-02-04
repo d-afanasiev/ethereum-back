@@ -1,7 +1,8 @@
 const { getAllTransactionModel } = require("../../models/transactions");
 
 const getAllTransaction = async (req, res) => {
-  const transactions = await getAllTransactionModel();
+  const { page, limit } = req.query;
+  const transactions = await getAllTransactionModel(page, limit);
 
   res.status(200).json(transactions);
 };
