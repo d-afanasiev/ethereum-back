@@ -5,15 +5,19 @@ const {
   getTransactionByQuery,
 } = require("../../controllers/transactions");
 
-const { getSchema } = require("../../schemas/joi/transactions");
+const { getSchema, getSerchSchema } = require("../../schemas/joi/transactions");
 
 const router = express.Router();
 
-router.get("/", ctrlWrapperMiddleware(getAllTransaction));
+router.get(
+  "/",
+  validation(getSchema, "query"),
+  ctrlWrapperMiddleware(getAllTransaction)
+);
 
 router.get(
   "/search",
-  validation(getSchema),
+  validation(getSerchSchema, "query"),
   ctrlWrapperMiddleware(getTransactionByQuery)
 );
 
