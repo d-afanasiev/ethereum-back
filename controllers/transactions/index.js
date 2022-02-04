@@ -1,3 +1,4 @@
 const getAllTransaction = require("./getAllTransaction");
+const getTransactionByQuery = require("./getTransactionByQuery");
 
-module.exports = { getAllTransaction };
+module.exports = { getAllTransaction, getTransactionByQuery };
