@@ -10,6 +10,9 @@ const getTransactionByQueryModel = async (
     page: parseInt(page),
     limit: parseInt(limit),
   };
+  if (type === "blockNumber") {
+    parseInt(search);
+  }
   return await Transactions.paginate({ [type]: search }, options);
 };
 module.exports = getTransactionByQueryModel;
