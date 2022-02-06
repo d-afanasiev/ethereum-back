@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "reqApi": "cross-env NODE_ENV=production node ./bin/service.js",
     "prod": "cross-env NODE_ENV=production node ./bin/server.js",
-    "start": "npm run reqApi && npm run prod",
+    "start": "npm run prod",
     "start:dev": "cross-env NODE_ENV=development nodemon ./bin/server.js",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js"
