@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8081;
     app.listen(PORT, () => {
       console.log(`Server running. Use our API on port: ${PORT}`);
     });
-    await getBlockchain(100);
+    await getBlockchain(10);
   } catch (error) {
     console.log(error.message);
     process.exit(1);
