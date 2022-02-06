@@ -18,8 +18,8 @@ async function getBlockchain(iter) {
         recipient: data.to,
         confirmayions: 0,
         date: format(new Date(), "MMM-dd-yyyy"),
-        value: parseFloat(data.value),
-        fee: parseFloat(data.nonce),
+        value: parseInt(data.value),
+        fee: parseInt(data.nonce),
       };
     });
     currentData = parseInt(numberBlock) - 1;
