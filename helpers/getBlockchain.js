@@ -3,19 +3,10 @@ const { getNumberBlock, getBlockByNumber } = require("../api/service");
 const { Transactions } = require("../schemas/mongoose/transactions");
 const sleep = require("./sleep");
 
-let oldBlock;
-
-async function getBlockchain(i) {
-  if (!i) {
-    return;
-  }
-  await sleep(5000);
-  const numberBlock = await getNumberBlock();
-  if (oldBlock === numberBlock) {
-    oldBlock = numberBlock;
-    return getBlockchain(i);
-  } else {
-    oldBlock = numberBlock;
+async function getBlockchain(iter) {
+  let currentData = null;
+  let numberBlock = await getNumberBlock();
+  for (let i = 0; i < iter; i++) {
     await Transactions.updateMany({}, { $inc: { confirmayions: 1 } });
     await sleep(5000);
     const block = await getBlockByNumber(numberBlock);
@@ -31,9 +22,9 @@ async function getBlockchain(i) {
         fee: parseFloat(data.nonce),
       };
     });
-
+    currentData = parseInt(numberBlock) - 1;
+    numberBlock = `0x${currentData.toString(16)}`;
     await Transactions.insertMany(currentBlock);
-    return getBlockchain(i - 1);
   }
 }
 
