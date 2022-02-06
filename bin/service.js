@@ -4,7 +4,7 @@ const getBlockchain = require("../helpers/getBlockchain");
 (async () => {
   await connectMongo();
   console.log("Database connection successful");
-  await getBlockchain(2);
+  await getBlockchain(1000);
   await closeConnectMongo();
   console.log("Database close connection");
 })();
