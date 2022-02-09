@@ -1,6 +1,7 @@
 const app = require("../app");
 const { connectMongo, closeConnectMongo } = require("../db/connection");
-const getBlockchain = require("../helpers/getBlockchain");
+const getOldBlock = require("../helpers/getOldBlock");
+const getNewVlock = require("../helpers/getNewVlock");
 
 const PORT = process.env.PORT || 8081;
 
@@ -11,7 +12,7 @@ const PORT = process.env.PORT || 8081;
     app.listen(PORT, () => {
       console.log(`Server running. Use our API on port: ${PORT}`);
     });
-    await getBlockchain(10);
+    await getOldBlock(10, getNewVlock());
   } catch (error) {
     console.log(error.message);
     process.exit(1);

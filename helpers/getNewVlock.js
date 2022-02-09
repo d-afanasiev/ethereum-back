@@ -1,19 +1,18 @@
 const { format } = require("date-fns");
 const { getNumberBlock, getBlockByNumber } = require("../api/service");
 const { Transactions } = require("../schemas/mongoose/transactions");
-const sleep = require("./sleep");
+const sleepTimeout = require("./sleep");
 
-async function getBlockchain(iter) {
-  let currentData = null;
-  let numberBlock = await getNumberBlock();
-  for (let i = 0; i < iter; i++) {
-    await Transactions.updateMany({}, { $inc: { confirmayions: 1 } });
-    await sleep(5000);
+function getNewBlock() {
+  setInterval(async () => {
+    let numberBlock = await getNumberBlock();
+    await sleepTimeout(5000);
     const block = await getBlockByNumber(numberBlock);
+    await Transactions.updateMany({}, { $inc: { confirmayions: 1 } });
     const currentBlock = block.transactions.map((data) => {
       return {
         blockNumber: parseInt(data.blockNumber),
-        id: data.transactionIndex,
+        id: data.hash,
         sender: data.from,
         recipient: data.to,
         confirmayions: 0,
@@ -22,10 +21,8 @@ async function getBlockchain(iter) {
         fee: parseInt(data.nonce),
       };
     });
-    currentData = parseInt(numberBlock) - 1;
-    numberBlock = `0x${currentData.toString(16)}`;
     await Transactions.insertMany(currentBlock);
-  }
+  }, 5000);
 }
 
-module.exports = getBlockchain;
+module.exports = getNewBlock;
